@@ -3,9 +3,15 @@ dotenv.config();
 
 import express from "express";
 import connectToDB from "./config/db.js";
+import productRoutes from "./routes/product.route.js";
 
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+//routes
+app.use("/api/product", productRoutes);
 
 app.get("/", (req, res)=>{
     res.json({success: true, message: "You are live"});
