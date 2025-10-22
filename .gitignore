@@ -1,0 +1,44 @@
+# Node.js dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+build/
+dist/
+public/build/ # If frontend build output goes here
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Test coverage reports
+coverage/
+
+# Frontend specific (if not already covered by build artifacts)
+frontend/build/
+frontend/dist/
+
+# Backend specific (if not already covered by build artifacts)
+backend/build/
+backend/dist/
