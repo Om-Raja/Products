@@ -9,18 +9,26 @@ import {
   Field,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useProductStore } from "../Store/product.store.js";
 
 const CreateProductPage = () => {
+  const {createProduct} = useProductStore();
+
   const [productDetail, setProductDetail] = useState({
     name: "",
     price: "",
     image: "",
   });
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(productDetail);
+    const response = await createProduct(productDetail);
+    const {success, message} = response;
+
+    console.log("Success: ", success);
+    console.log("Message: ", message);
+    
     setProductDetail({
       name: "",
       price: "",
@@ -36,12 +44,7 @@ const CreateProductPage = () => {
         </Heading>
 
         <Box
-          w={{
-            base:"95%",
-            sm: "80%",
-            md: "60%",
-            lg: "50%"
-          }}
+          w={["95%", "80%", "60%", "50%" /*mobile, tablet, desktop */]}
           bgColor={useColorModeValue("gray.300", "gray.700")}
           p={6}
           rounded={"lg"}
@@ -49,12 +52,16 @@ const CreateProductPage = () => {
         >
           <VStack spacing={4}>
             <Field.Root required>
-              <Field.Label>Name<Field.RequiredIndicator/></Field.Label>
+              <Field.Label>
+                Name
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Input
                 placeholder="Poco M2 Pro"
                 name="name"
                 value={productDetail.name}
                 variant="subtle"
+                type="text"
                 onChange={(event) =>
                   setProductDetail({
                     ...productDetail,
@@ -66,40 +73,46 @@ const CreateProductPage = () => {
             </Field.Root>
 
             <Field.Root required>
-              <Field.Label>Price<Field.RequiredIndicator/></Field.Label>
+              <Field.Label>
+                Price
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Input
-              placeholder="15999"
-              name="price"
-              value={productDetail.price}
-              variant="subtle"
-              onChange={(event) =>
-                setProductDetail({
-                  ...productDetail,
-                  price: event.target.value,
-                })
-              }
-            ></Input>
-            <Field.ErrorText>Price is required</Field.ErrorText>
+                placeholder="15999"
+                name="price"
+                value={productDetail.price}
+                variant="subtle"
+                type="number"
+                onChange={(event) =>
+                  setProductDetail({
+                    ...productDetail,
+                    price: event.target.value,
+                  })
+                }
+              ></Input>
+              <Field.ErrorText>Price is required</Field.ErrorText>
             </Field.Root>
             <Field.Root required>
-              <Field.Label>Image Link<Field.RequiredIndicator/></Field.Label>
+              <Field.Label>
+                Image Link
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Input
-              placeholder="pocom2-pro.jpg"
-              name="image"
-              value={productDetail.image}
-              variant="subtle"
-              onChange={(event) =>
-                setProductDetail({
-                  ...productDetail,
-                  image: event.target.value,
-                })
-              }
-            ></Input>
-            <Field.ErrorText>Image link is required</Field.ErrorText>
+                placeholder="pocom2-pro.jpg"
+                name="image"
+                value={productDetail.image}
+                variant="subtle"
+                type="text"
+                onChange={(event) =>
+                  setProductDetail({
+                    ...productDetail,
+                    image: event.target.value,
+                  })
+                }
+              ></Input>
+              <Field.ErrorText>Image link is required</Field.ErrorText>
             </Field.Root>
 
-            
-            
             <Button mt={3} w={"full"} onClick={handleSubmit}>
               Add Product
             </Button>
