@@ -20,6 +20,10 @@ const Navbar = () => {
           textTransform={"uppercase"}
           fontWeight={"bold"}
           textAlign={"center"}
+          bgGradient="to-r"
+          gradientFrom="red.500"
+          gradientTo="blue.500"
+          bgClip="text"
         >
           <Link to="/">Product Store 🛒</Link>
         </Text>
