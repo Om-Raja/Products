@@ -8,13 +8,10 @@ import { CiLight } from "react-icons/ci";
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Container maxW={"1140px"} px={4}>
+    <Container maxW={"1140px"} px={4} py={2}>
       <Flex
         justifyContent={"space-between"}
-        flexDir={{
-          base: "column",
-          sm: "row",
-        }}
+        direction="row"
         alignItems={"center"}
         h={16}
       >
