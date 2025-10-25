@@ -2,6 +2,7 @@ import {create} from "zustand";
 
 export const useProductStore = create((set)=>({
     products: [],
+    loading: true,
 
     setProducts: (products)=>set({
        products: products,
@@ -26,5 +27,20 @@ export const useProductStore = create((set)=>({
         }));
 
         return {success: true, message: "Product created successfully!"};
+    },
+
+    fetchProducts: async()=>{
+        const response = await fetch("/api/product", {
+            method: "GET",
+            headers:{
+                "Contetn-Type": "application/json",
+            }
+        });
+
+        const data = await response.json();
+
+        set({products: data.data, loading: false});
     }
+
+
 }))
