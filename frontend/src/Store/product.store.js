@@ -9,7 +9,7 @@ export const useProductStore = create((set)=>({
 
     createProduct: async (newProduct)=>{
         if(!newProduct.name || !newProduct.price || !newProduct.image)
-            return {success: "false", message: "All fields are required."};
+            return {success: false, message: "All fields are required."};
 
         const response = await fetch("/api/product", {
             method: "POST",

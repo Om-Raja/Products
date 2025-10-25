@@ -8,6 +8,7 @@ import {
   Button,
   Field,
 } from "@chakra-ui/react";
+import { toaster } from "@/components/ui/toaster";
 import { useState } from "react";
 import { useProductStore } from "../Store/product.store.js";
 
@@ -26,8 +27,21 @@ const CreateProductPage = () => {
     const response = await createProduct(productDetail);
     const {success, message} = response;
 
-    console.log("Success: ", success);
-    console.log("Message: ", message);
+    if(success){
+      toaster.create({
+        title: "Success",
+        description: message,
+        type: "success",
+        closable: true,
+      })
+    }else{
+      toaster.create({
+        title: "Failed",
+        type: "error",
+        description: message,
+        closable: true,
+      })
+    }
     
     setProductDetail({
       name: "",

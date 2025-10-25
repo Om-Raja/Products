@@ -1,9 +1,10 @@
 import { Box } from "@chakra-ui/react";
+import { Toaster } from "@/components/ui/toaster";
 import Navbar from "./components/Navbar.jsx";
 import CreateProductPage from "./pages/CreateProductPage";
 import HomePage from "./pages/HomePage";
 import {Routes, Route} from "react-router-dom"
-import { useColorMode, useColorModeValue } from "./components/ui/color-mode.jsx";
+import { useColorModeValue } from "./components/ui/color-mode.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/create" element={<CreateProductPage />} />
         </Routes>
       </Box>
+      <Toaster />
     </>
   );
 }
