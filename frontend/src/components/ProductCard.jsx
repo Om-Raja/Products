@@ -8,17 +8,41 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "./ui/color-mode";
+import { useProductStore } from "../Store/product.store.js";
+import { toaster } from "./ui/toaster";
 
 const ProductCard = ({ product }) => {
-  const { name, image, price } = product;
+  const { deleteProduct } = useProductStore();
+  const { name, image, price, _id } = product;
+
+  async function handleDelete() {
+    const response = await deleteProduct(_id);
+    const { success, message } = response;
+
+    if (success) {
+      toaster.create({
+        title: "Deleted",
+        type: "success",
+        description: message,
+        closable: true,
+      });
+    }else{
+      toaster.create({
+        title: "Failed",
+        type: "error",
+        description: message,
+        closable: true,
+      })
+    }
+  }
   return (
     <Box
       maxW={["90vw", "45vw", "30vw"]}
       shadow={"xl"}
-      shadowColor={"blackAlpha.900"}
+      shadowColor={"blackAlpha.800"}
       rounded={"md"}
       borderRadius={"md"}
-      bgColor={useColorModeValue("whiteAlpha.100", "gray.700")}
+      bgColor={useColorModeValue("blackAlpha.300", "gray.700")}
       transitionDuration={"slow"}
       transitionProperty={"all"}
       transitionTimingFunction={"ease-in-out"}
@@ -32,8 +56,9 @@ const ProductCard = ({ product }) => {
           src={image}
           alt={name}
           boxSize={"2xl"}
-          rounded={"sm"}
+          rounded={"md"}
           h={["30vh", "40vh", "50vh"]}
+          objectFit={"cover"}
         />
         <Box>
           <Heading
@@ -45,13 +70,18 @@ const ProductCard = ({ product }) => {
             {name}
           </Heading>
 
-          <Text fontSize="md" fontWight="semibold" as="span" color={useColorModeValue("green.700", "green.400")}>
+          <Text
+            fontSize="md"
+            fontWight="semibold"
+            as="span"
+            color={useColorModeValue("green.700", "green.400")}
+          >
             &#8377; {price}
           </Text>
 
           <HStack spacing={4} p={3} textAlign={"end"}>
             <Button>Edit</Button>
-            <Button>Delete</Button>
+            <Button onClick={handleDelete}>Delete</Button>
           </HStack>
         </Box>
       </VStack>

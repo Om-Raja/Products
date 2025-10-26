@@ -40,7 +40,33 @@ export const useProductStore = create((set)=>({
         const data = await response.json();
 
         set({products: data.data, loading: false});
-    }
+    },
+
+    deleteProduct: async(productId)=>{
+        if(!productId) return {success: false, message: "Product Id is required"};
+
+
+        const response = await fetch(`api/product/${productId}`, {
+            method: "DELETE",
+            headers:{
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+
+        set((state)=>{
+            let index = state.products.findIndex((obj)=>obj._id === productId);
+
+            console.log(state.products);
+            
+            //return karna jaruri hai
+            return state.products.splice(index, 1);
+        })
+
+        return {success: true, message: "Deleted product successfully!", data: data.data};
+
+    },
 
 
 }))
