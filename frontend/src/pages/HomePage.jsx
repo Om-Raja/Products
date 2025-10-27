@@ -12,10 +12,12 @@ const HomePage = () => {
   }, [fetchProducts]);
 
   if (loading) {
-    console.log("loading");
-    return <Text textAlign={"center"} fontSize="3xl" fontWeight="bold">Loading... ⌛</Text>;
-  } 
-  else if (!loading && products.length == 0) {
+    return (
+      <Text textAlign={"center"} fontSize="3xl" fontWeight="bold">
+        Loading... ⌛
+      </Text>
+    );
+  } else if (!loading && products.length == 0) {
     return (
       <Box>
         <Text as="p" textAlign="center" fontSize="2xl">
